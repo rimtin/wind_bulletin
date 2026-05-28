@@ -1,0 +1,185 @@
+/* wind-style.css */
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  font-family: Arial, sans-serif;
+  background:#f2f2f2;
+  display:flex;
+  justify-content:center;
+}
+
+.container{
+  width:100%;
+  max-width:900px;
+  background:#fff;
+  padding:20px;
+  margin:20px auto;
+  box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+.page{
+  page-break-after:always;
+  margin-bottom:40px;
+}
+
+.center-title{
+  text-align:center;
+  font-size:28px;
+  margin-bottom:8px;
+}
+
+.center-date{
+  text-align:center;
+  margin-bottom:20px;
+  font-size:15px;
+}
+
+.table-title{
+  margin:20px 0 10px;
+  font-size:20px;
+  font-weight:bold;
+}
+
+.wind-info-table,
+.forecast-table{
+  width:100%;
+  border-collapse:collapse;
+  margin-bottom:25px;
+}
+
+.wind-info-table th,
+.wind-info-table td,
+.forecast-table th,
+.forecast-table td{
+  border:1.5px solid #222;
+  padding:8px;
+  text-align:center;
+  font-size:13px;
+}
+
+.wind-info-table th,
+.forecast-table th{
+  background:#d9d9d9;
+  font-weight:bold;
+}
+
+.forecast-table tbody tr:nth-child(even){
+  background:#f7f7f7;
+}
+
+/* Wind colors */
+
+.wind-low{
+  background:#8BC34A;
+  font-weight:600;
+}
+
+.wind-medium{
+  background:#FFF200;
+  font-weight:600;
+}
+
+.wind-high{
+  background:#FF9800;
+  font-weight:600;
+}
+
+.wind-very-high{
+  background:#FF1E1E;
+  color:#fff;
+  font-weight:700;
+}
+
+.wind-gust{
+  background:#3F51B5;
+  color:#fff;
+  font-weight:700;
+}
+
+/* Dropdown */
+
+select{
+  width:100%;
+  padding:5px;
+  border:none;
+  font-size:12px;
+  font-weight:600;
+  background:transparent;
+}
+
+/* Maps */
+
+.map-label{
+  text-align:center;
+  margin:15px 0;
+  font-size:18px;
+  font-weight:bold;
+}
+
+.map-wrapper{
+  position:relative;
+  margin-bottom:40px;
+}
+
+svg{
+  width:100%;
+  height:550px;
+  border:1px solid #ccc;
+  background:#fff;
+}
+
+.map-legend{
+  position:absolute;
+  top:10px;
+  right:10px;
+  background:#fff;
+  padding:10px;
+  border-radius:6px;
+  border:1px solid #ccc;
+  font-size:12px;
+  line-height:1.8;
+  box-shadow:0 0 6px rgba(0,0,0,0.1);
+}
+
+.legend-box{
+  width:18px;
+  height:18px;
+  display:inline-block;
+  margin-right:8px;
+  border:1px solid #222;
+  vertical-align:middle;
+}
+
+/* Notes */
+
+.bulletin-text{
+  border:1px solid #ccc;
+  min-height:180px;
+  padding:12px;
+  line-height:1.6;
+  border-radius:6px;
+  font-size:14px;
+}
+
+/* Button */
+
+button{
+  display:block;
+  margin:20px auto;
+  padding:12px 22px;
+  background:#1976D2;
+  color:#fff;
+  border:none;
+  border-radius:6px;
+  font-size:15px;
+  cursor:pointer;
+}
+
+button:hover{
+  background:#1259a7;
+}
