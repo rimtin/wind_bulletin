@@ -32,9 +32,9 @@ function drawWindMap(svgId) {
   svg.selectAll("*").remove();
 
   const projection = d3.geoMercator()
-    .scale(850)
-    .center([89.8, 21.5])
-    .translate([430, 290]);
+    .scale(760)
+    .center([82.8, 22.5])
+    .translate([410, 175]);
 
   const path = d3.geoPath().projection(projection);
 
@@ -49,9 +49,13 @@ function drawWindMap(svgId) {
         .attr("d", path)
         .attr("fill", "#e0e0e0")
         .attr("stroke", "#333")
-        .attr("stroke-width", 1);
+        .attr("stroke-width", 0.8);
 
       updateWindMapColors();
+    })
+    .catch(error => {
+      console.error("Map loading error:", error);
+      alert("Map could not load. Please check internet connection or map URL.");
     });
 }
 
@@ -112,19 +116,52 @@ function buildLegend() {
   document.getElementById("legendDay3").innerHTML = legendHTML;
 }
 
-function downloadPDF() {
+function waitForMapsThenDownload() {
+  const mapsReady =
+    document.querySelectorAll("#windMapDay1 path").length > 0 &&
+    document.querySelectorAll("#windMapDay2 path").length > 0 &&
+    document.querySelectorAll("#windMapDay3 path").length > 0;
+
+  if (!mapsReady) {
+    setTimeout(waitForMapsThenDownload, 500);
+    return;
+  }
+
   const element = document.getElementById("pdf-area");
 
   const opt = {
-    margin: 0.3,
+    margin: [0.12, 0.12, 0.12, 0.12],
     filename: "Wind_Forecast_Bulletin.pdf",
-    image: { type: "jpeg", quality: 0.98 },
-    html2canvas: { scale: 2, useCORS: true, allowTaint: true, logging: false },
-    jsPDF: { unit: "in", format: "a4", orientation: "portrait" },
-    pagebreak: { mode: ["avoid-all", "css", "legacy"] }
+    image: { type: "jpeg", quality: 0.68 },
+
+    html2canvas: {
+      scale: 1.05,
+      useCORS: true,
+      allowTaint: true,
+      backgroundColor: "#ffffff",
+      logging: false,
+      scrollY: 0
+    },
+
+    jsPDF: {
+      unit: "in",
+      format: "a4",
+      orientation: "portrait",
+      compress: true
+    },
+
+    pagebreak: {
+      mode: ["css", "legacy"],
+      avoid: ["table", ".map-wrapper"]
+    }
   };
 
   html2pdf().set(opt).from(element).save();
+}
+
+function downloadPDF() {
+  window.scrollTo(0, 0);
+  waitForMapsThenDownload();
 }
 
 window.onload = function() {
@@ -136,3 +173,5 @@ window.onload = function() {
   drawWindMap("#windMapDay2");
   drawWindMap("#windMapDay3");
 };
+
+  
