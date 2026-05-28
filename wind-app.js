@@ -1,7 +1,3 @@
-// wind-app.js
-
-window.windStateCentroids = {};
-
 function createWindDropdown() {
   return `
     <select onchange="updateWindMapColors()">
@@ -56,10 +52,6 @@ function drawWindMap(svgId) {
         .attr("stroke-width", 1);
 
       updateWindMapColors();
-    })
-    .catch(error => {
-      console.error("Map loading error:", error);
-      alert("Wind map could not load.");
     });
 }
 
@@ -89,27 +81,20 @@ function updateWindMapColors() {
     "Tamil Nadu": "TN"
   };
 
-  d3.selectAll("#windMapDay1 path")
-    .attr("fill", function(d) {
-      const stateName = d.properties.st_nm;
-      const code = stateCodeMap[stateName];
-      return code ? getStateColor(code, 2) : "#e0e0e0";
-    });
+  d3.selectAll("#windMapDay1 path").attr("fill", function(d) {
+    const code = stateCodeMap[d.properties.st_nm];
+    return code ? getStateColor(code, 2) : "#e0e0e0";
+  });
 
-  d3.selectAll("#windMapDay2 path")
-    .attr("fill", function(d) {
-      const stateName = d.properties.st_nm;
-      const code = stateCodeMap[stateName];
-      return code ? getStateColor(code, 3) : "#e0e0e0";
-    });
+  d3.selectAll("#windMapDay2 path").attr("fill", function(d) {
+    const code = stateCodeMap[d.properties.st_nm];
+    return code ? getStateColor(code, 3) : "#e0e0e0";
+  });
 
-  // MAP 3
-  d3.selectAll("#indiaMap3 path")
-    .attr("fill", function(d) {
-      const stateName = d.properties.st_nm;
-      const code = stateCodeMap[stateName];
-      return code ? getStateColor(code, 4) : "#efefef";
-    });
+  d3.selectAll("#windMapDay3 path").attr("fill", function(d) {
+    const code = stateCodeMap[d.properties.st_nm];
+    return code ? getStateColor(code, 4) : "#e0e0e0";
+  });
 }
 
 function buildLegend() {
@@ -124,6 +109,7 @@ function buildLegend() {
 
   document.getElementById("legendDay1").innerHTML = legendHTML;
   document.getElementById("legendDay2").innerHTML = legendHTML;
+  document.getElementById("legendDay3").innerHTML = legendHTML;
 }
 
 function downloadPDF() {
@@ -133,20 +119,9 @@ function downloadPDF() {
     margin: 0.3,
     filename: "Wind_Forecast_Bulletin.pdf",
     image: { type: "jpeg", quality: 0.98 },
-    html2canvas: {
-      scale: 2,
-      useCORS: true,
-      allowTaint: true,
-      logging: false
-    },
-    jsPDF: {
-      unit: "in",
-      format: "a4",
-      orientation: "portrait"
-    },
-    pagebreak: {
-      mode: ["avoid-all", "css", "legacy"]
-    }
+    html2canvas: { scale: 2, useCORS: true, allowTaint: true, logging: false },
+    jsPDF: { unit: "in", format: "a4", orientation: "portrait" },
+    pagebreak: { mode: ["avoid-all", "css", "legacy"] }
   };
 
   html2pdf().set(opt).from(element).save();
@@ -156,6 +131,8 @@ window.onload = function() {
   updateForecastDate();
   buildWindTable();
   buildLegend();
+
   drawWindMap("#windMapDay1");
   drawWindMap("#windMapDay2");
+  drawWindMap("#windMapDay3");
 };
