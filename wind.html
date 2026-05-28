@@ -1,0 +1,111 @@
+<!-- wind.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wind Forecast Bulletin</title>
+
+  <link rel="stylesheet" href="wind-style.css" />
+
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="https://unpkg.com/topojson-client@3"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+
+<body>
+  <div class="container">
+    <div id="pdf-area">
+
+      <div class="page">
+        <h1 class="center-title">Wind Forecast Bulletin</h1>
+        <h2 id="forecast-date" class="center-date"></h2>
+
+        <h3 class="table-title">Wind Speed Classification</h3>
+        <table class="wind-info-table">
+          <thead>
+            <tr>
+              <th>S. No.</th>
+              <th>Wind Category</th>
+              <th>Wind Speed</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="wind-low">
+              <td>1</td>
+              <td>Low Wind Speed</td>
+              <td>&lt; 3 m/s</td>
+              <td>Calm wind with very light air movement.</td>
+            </tr>
+            <tr class="wind-medium">
+              <td>2</td>
+              <td>Medium Wind Speed</td>
+              <td>3 to 8 m/s</td>
+              <td>Moderate breeze under normal weather conditions.</td>
+            </tr>
+            <tr class="wind-high">
+              <td>3</td>
+              <td>High Wind Speed</td>
+              <td>8 to 11 m/s</td>
+              <td>Strong wind that may affect outdoor activities.</td>
+            </tr>
+            <tr class="wind-very-high">
+              <td>4</td>
+              <td>Very High Wind Speed</td>
+              <td>&gt; 11 m/s</td>
+              <td>Intense wind with possible operational impact.</td>
+            </tr>
+            <tr class="wind-gust">
+              <td>5</td>
+              <td>Gust / Circulation</td>
+              <td>Sudden peak</td>
+              <td>Short-duration wind rise or localized circulation.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3 class="table-title">Wind Forecast</h3>
+        <table class="forecast-table">
+          <thead>
+            <tr>
+              <th>State</th>
+              <th>Geographical Area</th>
+              <th>Day-1</th>
+              <th>Day-2</th>
+            </tr>
+          </thead>
+          <tbody id="wind-table-body"></tbody>
+        </table>
+      </div>
+
+      <div class="page">
+        <h3 class="map-label">Day-1 Wind Forecast Map</h3>
+        <div class="map-wrapper">
+          <svg id="windMapDay1"></svg>
+          <div class="map-legend" id="legendDay1"></div>
+        </div>
+
+        <h3 class="map-label">Day-2 Wind Forecast Map</h3>
+        <div class="map-wrapper">
+          <svg id="windMapDay2"></svg>
+          <div class="map-legend" id="legendDay2"></div>
+        </div>
+      </div>
+
+      <div class="page">
+        <h3 class="table-title">Weather System</h3>
+        <div class="bulletin-text" contenteditable="true">
+          Add wind-related weather system notes here...
+        </div>
+      </div>
+
+    </div>
+
+    <button onclick="downloadPDF()">Download PDF</button>
+  </div>
+
+  <script src="wind-data.js"></script>
+  <script src="wind-app.js"></script>
+</body>
+</html>
