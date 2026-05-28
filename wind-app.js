@@ -102,6 +102,14 @@ function updateWindMapColors() {
       const code = stateCodeMap[stateName];
       return code ? getStateColor(code, 3) : "#e0e0e0";
     });
+
+  // MAP 3
+  d3.selectAll("#indiaMap3 path")
+    .attr("fill", function(d) {
+      const stateName = d.properties.st_nm;
+      const code = stateCodeMap[stateName];
+      return code ? getStateColor(code, 4) : "#efefef";
+    });
 }
 
 function buildLegend() {
