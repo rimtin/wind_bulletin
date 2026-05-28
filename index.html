@@ -16,7 +16,7 @@
   <div class="container">
     <div id="pdf-area">
 
-      <div class="page">
+      <section class="pdf-section">
         <h1 class="center-title">Wind Forecast Bulletin</h1>
         <h2 id="forecast-date" class="center-date"></h2>
 
@@ -52,9 +52,9 @@
           </thead>
           <tbody id="wind-table-body"></tbody>
         </table>
-      </div>
+      </section>
 
-      <div class="page">
+      <section class="pdf-section maps-section">
         <h3 class="map-label">Wind Forecast Map - 1</h3>
         <div class="map-wrapper">
           <svg id="windMapDay1"></svg>
@@ -72,14 +72,14 @@
           <svg id="windMapDay3"></svg>
           <div class="map-legend" id="legendDay3"></div>
         </div>
-      </div>
+      </section>
 
-      <div class="page">
+      <section class="pdf-section">
         <h3 class="table-title">Weather System</h3>
         <div class="bulletin-text" contenteditable="true">
           Add wind-related weather system notes here...
         </div>
-      </div>
+      </section>
 
     </div>
 
