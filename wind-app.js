@@ -32,9 +32,9 @@ function drawWindMap(svgId) {
   svg.selectAll("*").remove();
 
   const projection = d3.geoMercator()
-    .scale(760)
+    .scale(680)
     .center([82.8, 22.5])
-    .translate([410, 175]);
+    .translate([420, 235]);
 
   const path = d3.geoPath().projection(projection);
 
