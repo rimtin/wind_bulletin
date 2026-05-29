@@ -11,11 +11,23 @@ function buildWindTable() {
   tbody.innerHTML = "";
 
   windForecastData.forEach(item => {
-    item.areas.forEach(area => {
+
+    item.areas.forEach((area, index) => {
+
       const tr = document.createElement("tr");
 
+      let stateCell = "";
+
+      if (index === 0) {
+        stateCell = `
+          <td rowspan="${item.areas.length}" class="state-cell">
+            ${item.state}
+          </td>
+        `;
+      }
+
       tr.innerHTML = `
-        <td>${item.state}</td>
+        ${stateCell}
         <td>${area}</td>
         <td>${createWindDropdown()}</td>
         <td>${createWindDropdown()}</td>
