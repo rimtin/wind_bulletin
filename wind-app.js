@@ -75,21 +75,15 @@ const geoNameMap = {
   "Madhya Maharashtra": "Madhya Maharashtra",
   "Marathwada": "Marathwada",
   "Vidarbha": "Vidarbha",
-
   "West MP": "West Madhya Pradesh",
   "East MP": "East Madhya Pradesh",
-
   "West Rajasthan": "West Rajasthan",
   "East Rajasthan": "East Rajasthan",
-
   "Saurashtra & Kutch": "Saurashtra & Kachh",
   "Gujarat Region": "Gujarat region",
-
   "Andhra Pradesh": "Coastal Andhra Pradesh",
-
   "North Interior Karnataka": "N.I. Karnataka",
   "South Interior Karnataka": "S.I. Karnataka",
-
   "Tamil Nadu": "Tamil Nadu & Puducherry"
 };
 
@@ -135,15 +129,18 @@ async function drawWindMap(svgId) {
   const svg = d3.select(svgId);
   svg.selectAll("*").remove();
 
-  const projection = d3.geoMercator()
-    .scale(680)
-    .center([82.8, 22.5])
-    .translate([420, 235]);
+  const width = 860;
+  const height = 460;
 
-  const path = d3.geoPath().projection(projection);
+  svg.attr("viewBox", `0 0 ${width} ${height}`);
 
   try {
     const data = await loadGeoJSON();
+
+    const projection = d3.geoMercator()
+      .fitSize([width, height], data);
+
+    const path = d3.geoPath().projection(projection);
 
     svg.selectAll("path")
       .data(data.features)
