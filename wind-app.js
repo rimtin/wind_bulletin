@@ -124,11 +124,35 @@ function getSubdivisionColor(geoName, dayNumber) {
     if (normalizeName(mappedGeoName) === target) {
       const select = row.querySelectorAll("select")[dayNumber - 1];
       const selected = select?.value;
-      return windColors[selected] || "#e0e0e0";
+      return windColors[selected] || null;
     }
   }
 
-  return "#e0e0e0";
+  return null;
+}
+
+function addNoForecastPattern(svg) {
+  const defs = svg.append("defs");
+
+  const pattern = defs.append("pattern")
+    .attr("id", "noForecastPattern")
+    .attr("patternUnits", "userSpaceOnUse")
+    .attr("width", 8)
+    .attr("height", 8)
+    .attr("patternTransform", "rotate(45)");
+
+  pattern.append("rect")
+    .attr("width", 8)
+    .attr("height", 8)
+    .attr("fill", "#ffffff");
+
+  pattern.append("line")
+    .attr("x1", 0)
+    .attr("y1", 0)
+    .attr("x2", 0)
+    .attr("y2", 8)
+    .attr("stroke", "#999")
+    .attr("stroke-width", 2);
 }
 
 async function drawWindMap(svgId) {
@@ -139,6 +163,8 @@ async function drawWindMap(svgId) {
   const height = 520;
 
   svg.attr("viewBox", `0 0 ${width} ${height}`);
+
+  addNoForecastPattern(svg);
 
   try {
     const data = await loadGeoJSON();
@@ -154,7 +180,7 @@ async function drawWindMap(svgId) {
       .enter()
       .append("path")
       .attr("d", path)
-      .attr("fill", "#e0e0e0")
+      .attr("fill", "url(#noForecastPattern)")
       .attr("stroke", "#333")
       .attr("stroke-width", 0.6);
 
@@ -174,15 +200,18 @@ async function drawWindMap(svgId) {
 
 function updateWindMapColors() {
   d3.selectAll("#windMapDay1 path").attr("fill", function(d) {
-    return getSubdivisionColor(getGeoNameFromFeature(d), 1);
+    const color = getSubdivisionColor(getGeoNameFromFeature(d), 1);
+    return color || "url(#noForecastPattern)";
   });
 
   d3.selectAll("#windMapDay2 path").attr("fill", function(d) {
-    return getSubdivisionColor(getGeoNameFromFeature(d), 2);
+    const color = getSubdivisionColor(getGeoNameFromFeature(d), 2);
+    return color || "url(#noForecastPattern)";
   });
 
   d3.selectAll("#windMapDay3 path").attr("fill", function(d) {
-    return getSubdivisionColor(getGeoNameFromFeature(d), 3);
+    const color = getSubdivisionColor(getGeoNameFromFeature(d), 3);
+    return color || "url(#noForecastPattern)";
   });
 }
 
@@ -194,6 +223,10 @@ function buildLegend() {
         ${option}
       </div>
     `).join("")}
+    <div>
+      <span class="legend-box no-forecast-box"></span>
+      No Forecast / Not Used
+    </div>
   `;
 
   const l1 = document.getElementById("legendDay1");
