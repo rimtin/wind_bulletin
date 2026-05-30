@@ -135,7 +135,7 @@ async function drawWindMap(svgId) {
   const svg = d3.select(svgId);
   svg.selectAll("*").remove();
 
-  const width = 860;
+  const width = 360;
   const height = 460;
 
   svg.attr("viewBox", `0 0 ${width} ${height}`);
