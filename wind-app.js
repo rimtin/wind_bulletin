@@ -23,6 +23,7 @@ async function loadGeoJSON() {
 
       if (data && data.features && data.features.length > 0) {
         console.log("GeoJSON loaded from:", url);
+        console.log("First feature properties:", data.features[0].properties);
         cachedGeoJSON = data;
         return data;
       }
@@ -101,6 +102,11 @@ function getGeoNameFromFeature(d) {
     d.properties?.ST_NM ||
     d.properties?.st_nm ||
     d.properties?.ST_NAME ||
+    d.properties?.SUBDIVISION ||
+    d.properties?.subdivision ||
+    d.properties?.SUBDIV_NAME ||
+    d.properties?.subdiv_name ||
+    d.properties?.NAME ||
     d.properties?.name ||
     d.properties?.Name ||
     ""
@@ -138,7 +144,7 @@ async function drawWindMap(svgId) {
     const data = await loadGeoJSON();
 
     const projection = d3.geoMercator()
-      .fitSize([width, height], data);
+      .fitExtent([[20, 20], [width - 20, height - 20]], data);
 
     const path = d3.geoPath().projection(projection);
 
